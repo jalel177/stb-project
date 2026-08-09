@@ -1,0 +1,226 @@
+:root {
+  --navy-950: #0b1b2e;
+  --navy-800: #123152;
+  --gold-500: #c6a15b;
+  --bg: #f3f5f8;
+  --surface: #ffffff;
+  --border: #e1e5ea;
+  --text-900: #0f1b2d;
+  --text-600: #5b6673;
+  --text-400: #93a0ad;
+  --success-bg: #e4f4ea;
+  --success-text: #1b7a43;
+  --danger-bg: #fbe9e7;
+  --danger-text: #b3261e;
+  --danger-border: #d9564a;
+  --warning-bg: #fbf0d9;
+  --warning-text: #8a5b00;
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-mono: 'IBM Plex Mono', 'SFMono-Regular', Menlo, monospace;
+}
+
+.history {
+  background: var(--surface);
+  padding: 24px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 10px rgba(15, 27, 45, 0.04);
+}
+
+.history .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+.history .header h2 {
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: 600;
+  color: var(--navy-950);
+  letter-spacing: -0.2px;
+}
+
+.history .header button {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--navy-800);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.history .header button:hover {
+  background: #eaedf1;
+}
+
+.search-section {
+  background: var(--bg);
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 22px;
+}
+
+.search-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.search-row:last-child {
+  margin-bottom: 0;
+}
+
+.search-row input {
+  flex: 1;
+  padding: 10px 14px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-family: var(--font-mono);
+  color: var(--text-900);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.search-row input::placeholder {
+  color: var(--text-400);
+  font-family: 'Inter', sans-serif;
+}
+
+.search-row input:focus {
+  outline: none;
+  border-color: var(--navy-800);
+  box-shadow: 0 0 0 3px rgba(18, 49, 82, 0.10);
+}
+
+.search-row button {
+  padding: 10px 18px;
+  background: var(--navy-950);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  white-space: nowrap;
+}
+
+.search-row button:hover:not(:disabled) {
+  background: var(--navy-800);
+}
+
+.search-row button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.search-row button:last-child {
+  background: var(--surface);
+  color: var(--text-600);
+  border: 1px solid var(--border);
+}
+
+.search-row button:last-child:hover {
+  background: var(--bg);
+  color: var(--text-900);
+}
+
+.error-box {
+  margin-bottom: 18px;
+  padding: 12px 16px;
+  background: var(--danger-bg);
+  border-radius: 10px;
+  border-left: 3px solid var(--danger-border);
+  color: var(--danger-text);
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.history table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+.history th {
+  background: var(--bg);
+  padding: 11px 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--text-600);
+  border-bottom: 1px solid var(--border);
+}
+
+.history td {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-900);
+}
+
+.history tr:hover {
+  background: var(--bg);
+}
+
+.history tr:last-child td {
+  border-bottom: none;
+}
+
+.history .ref {
+  font-weight: 600;
+  font-family: var(--font-mono);
+  color: var(--navy-800);
+  font-size: 12.5px;
+}
+
+.status {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.status.approved,
+.status.validated {
+  background: var(--success-bg);
+  color: var(--success-text);
+}
+
+.status.rejected {
+  background: var(--danger-bg);
+  color: var(--danger-text);
+}
+
+.status.pending {
+  background: var(--warning-bg);
+  color: var(--warning-text);
+}
+
+.loading {
+  text-align: center;
+  padding: 48px;
+  color: var(--text-600);
+  font-size: 14px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 48px;
+  color: var(--text-600);
+  font-size: 14px;
+}

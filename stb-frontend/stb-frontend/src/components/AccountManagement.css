@@ -1,0 +1,28 @@
+.account-management {
+  padding: 20px;
+}
+
+.account-management table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.account-management thead {
+  background-color: #f4f4f5;
+}
+
+.account-management th, .account-management td {
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.account-management select {
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: 1px solid #d1d5db;
+}

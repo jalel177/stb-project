@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --navy-950: #0b1b2e;
+  --navy-800: #123152;
+  --navy-700: #1b3f68;
+  --gold-500: #c6a15b;
+  --gold-600: #a9843c;
+  --gold-100: #f6edd9;
+  --bg: #f3f5f8;
+  --surface: #ffffff;
+  --border: #e1e5ea;
+  --text-900: #0f1b2d;
+  --text-600: #5b6673;
+  --text-400: #93a0ad;
+  --danger-bg: #fbe9e7;
+  --danger-text: #b3261e;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --shadow-md: 0 20px 44px rgba(11, 27, 46, 0.12);
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'SFMono-Regular', Menlo, monospace;
+}
+
+body {
+  font-family: var(--font-body);
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 24px;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(198, 161, 91, 0.10), transparent 40%),
+    radial-gradient(circle at 88% 82%, rgba(27, 63, 104, 0.08), transparent 42%),
+    var(--bg);
+}
+
+.login-card {
+  position: relative;
+  background: var(--surface);
+  padding: 44px 40px 36px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+  width: 100%;
+  max-width: 400px;
+  overflow: hidden;
+}
+
+.login-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--navy-800) 0%, var(--gold-500) 100%);
+}
+
+.login-card h1 {
+  font-family: var(--font-display);
+  font-size: 27px;
+  font-weight: 600;
+  color: var(--navy-950);
+  margin-bottom: 6px;
+  letter-spacing: -0.2px;
+}
+
+.login-card p.subtitle {
+  color: var(--text-600);
+  font-size: 13.5px;
+  margin-bottom: 26px;
+}
+
+.login-card input {
+  width: 100%;
+  padding: 13px 14px;
+  background: #fbfbfc;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text-900);
+  margin-bottom: 14px;
+  transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.login-card input::placeholder {
+  color: var(--text-400);
+}
+
+.login-card input:focus {
+  outline: none;
+  background: var(--surface);
+  border-color: var(--navy-700);
+  box-shadow: 0 0 0 3px rgba(27, 63, 104, 0.10);
+}
+
+.login-card button {
+  width: 100%;
+  padding: 13px;
+  background: var(--navy-950);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.1px;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.05s ease;
+  margin-top: 4px;
+}
+
+.login-card button:hover:not(:disabled) {
+  background: var(--navy-800);
+}
+
+.login-card button:active:not(:disabled) {
+  transform: scale(0.99);
+}
+
+.login-card button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.login-card .error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--danger-bg);
+  color: var(--danger-text);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin: -2px 0 14px 0;
+}
+
+.login-card p {
+  font-size: 13.5px;
+  color: var(--text-600);
+  margin-top: 18px;
+  text-align: center;
+}
+
+.login-card .link {
+  color: var(--navy-800);
+  cursor: pointer;
+  font-weight: 600;
+  transition: color 0.15s ease;
+}
+
+.login-card .link:hover {
+  color: var(--gold-600);
+  text-decoration: underline;
+}
+
+.login-card .demo {
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--border);
+  font-size: 12.5px;
+  color: var(--text-600);
+  font-family: var(--font-mono);
+  text-align: left;
+}
+
+.login-card .demo span {
+  font-weight: 500;
+  color: var(--navy-800);
+}

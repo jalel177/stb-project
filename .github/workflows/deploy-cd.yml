@@ -1,0 +1,63 @@
+name: Deploy to AWS
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:   # lets you also trigger it manually from the Actions tab
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: us-east-1
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform apply (provision/update infra)
+        working-directory: ./Cloud/terraform
+        run: |
+          terraform init
+          terraform apply -auto-approve
+
+      - name: Get API URL from Terraform output
+        id: tf-output
+        working-directory: ./Cloud/terraform
+        run: echo "api_url=$(terraform output -raw api_invoke_url)" >> "$GITHUB_OUTPUT"
+
+      - name: Log in to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push frontend image
+        working-directory: ./stb-frontend/stb-frontend
+        run: |
+          docker build --build-arg REACT_APP_API_URL=${{ steps.tf-output.outputs.api_url }} -t stb-frontend .
+          docker tag stb-frontend:latest 705809089341.dkr.ecr.us-east-1.amazonaws.com/stb-frontend:latest
+          docker push 705809089341.dkr.ecr.us-east-1.amazonaws.com/stb-frontend:latest
+
+      - name: Build and push backend image
+        working-directory: ./demo
+        run: |
+          docker build -t stb-backend .
+          docker tag stb-backend:latest 705809089341.dkr.ecr.us-east-1.amazonaws.com/stb-backend:latest
+          docker push 705809089341.dkr.ecr.us-east-1.amazonaws.com/stb-backend:latest
+
+      - name: Replace EC2 instances with new images
+        working-directory: ./Cloud/terraform
+        run: |
+          terraform apply -replace="aws_instance.frontend" -replace="aws_instance.backend" -auto-approve
+
+      - name: Show deployed frontend URL
+        working-directory: ./Cloud/terraform
+        run: |
+          echo "Frontend: http://$(terraform output -raw frontend_public_ip)"

@@ -1,0 +1,38 @@
+name: Backend CI
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'demo/**'          # adjust this path to match your backend folder
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'demo/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: maven
+
+      - name: Build with Maven
+        working-directory: ./demo        # adjust to your backend folder
+        run: ./mvnw clean compile
+
+      - name: Run tests
+        working-directory: ./demo
+        run: ./mvnw test
+
+      - name: Package (verify it builds a runnable jar)
+        working-directory: ./demo
+        run: ./mvnw package -DskipTests

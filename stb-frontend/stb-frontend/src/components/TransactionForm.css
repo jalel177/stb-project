@@ -1,0 +1,177 @@
+:root {
+  --navy-950: #0b1b2e;
+  --navy-800: #123152;
+  --gold-500: #c6a15b;
+  --bg: #f3f5f8;
+  --surface: #ffffff;
+  --border: #e1e5ea;
+  --text-900: #0f1b2d;
+  --text-600: #5b6673;
+  --text-400: #93a0ad;
+  --success-bg: #e4f4ea;
+  --success-text: #1b7a43;
+  --success-border: #2fa565;
+  --danger-bg: #fbe9e7;
+  --danger-text: #b3261e;
+  --danger-border: #d9564a;
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-mono: 'IBM Plex Mono', 'SFMono-Regular', Menlo, monospace;
+}
+
+.transaction-form {
+  max-width: 640px;
+  margin: 0 auto;
+  background: var(--surface);
+  padding: 32px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 10px rgba(15, 27, 45, 0.04);
+}
+
+.transaction-form h2 {
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: 600;
+  color: var(--navy-950);
+  margin-bottom: 4px;
+  letter-spacing: -0.2px;
+}
+
+.transaction-form .description {
+  font-size: 13.5px;
+  color: var(--text-600);
+  margin-bottom: 24px;
+}
+
+.mode-toggle {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 24px;
+  background: var(--bg);
+  border-radius: 12px;
+  padding: 4px;
+}
+
+.mode-toggle button {
+  flex: 1;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 9px;
+  background: transparent;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-600);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.mode-toggle button.active {
+  background: var(--surface);
+  color: var(--navy-950);
+  box-shadow: 0 1px 3px rgba(15, 27, 45, 0.08);
+}
+
+.transaction-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.transaction-form input {
+  padding: 13px 14px;
+  background: #fbfbfc;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: var(--font-mono);
+  color: var(--text-900);
+  transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.transaction-form input::placeholder {
+  color: var(--text-400);
+  font-family: 'Inter', sans-serif;
+}
+
+.transaction-form input:focus {
+  outline: none;
+  background: var(--surface);
+  border-color: var(--navy-800);
+  box-shadow: 0 0 0 3px rgba(18, 49, 82, 0.10);
+}
+
+.transaction-form button[type="submit"] {
+  padding: 13px;
+  background: var(--navy-950);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  margin-top: 4px;
+}
+
+.transaction-form button[type="submit"]:hover:not(:disabled) {
+  background: var(--navy-800);
+}
+
+.transaction-form button[type="submit"]:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.error-box {
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: var(--danger-bg);
+  border-radius: 10px;
+  border-left: 3px solid var(--danger-border);
+  color: var(--danger-text);
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+.result-box {
+  margin-top: 16px;
+  padding: 18px;
+  border-radius: 12px;
+  background: var(--bg);
+  border-left: 3px solid var(--navy-800);
+}
+
+.result-box.success {
+  border-left-color: var(--success-border);
+  background: var(--success-bg);
+}
+
+.result-box.error {
+  border-left-color: var(--danger-border);
+  background: var(--danger-bg);
+}
+
+.result-box h3 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-900);
+  margin-bottom: 6px;
+}
+
+.result-box p {
+  font-size: 13.5px;
+  color: var(--text-600);
+  margin-bottom: 2px;
+}
+
+.result-box pre {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 12px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--text-900);
+  margin-top: 10px;
+}

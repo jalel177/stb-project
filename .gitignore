@@ -1,0 +1,43 @@
+# ===== Java / Spring Boot (backend) =====
+demo/target/
+demo/.mvn/
+demo/mvnw.cmd
+*.class
+*.jar
+!*/wrapper/maven-wrapper.jar
+HELP.md
+
+# ===== Node / React (frontend) =====
+stb-frontend/stb-frontend/node_modules/
+stb-frontend/stb-frontend/build/
+stb-frontend/stb-frontend/.env
+stb-frontend/stb-frontend/npm-debug.log*
+
+# ===== IDE =====
+.idea/
+.vscode/
+*.iml
+.DS_Store
+
+# ===== Secrets / env =====
+.env
+application-local.properties
+application-secrets.properties
+
+# ===== OS =====
+Thumbs.db
+
+# ===== Terraform =====
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+.terraform/
+.terraform.lock.hcl
+*.tfvars
+crash.log
+crash.*.log
+*.exe
+terraform-provider-*
+
+# ===== Deployment scripts (may contain paths/keys) =====
+deploy.ps1

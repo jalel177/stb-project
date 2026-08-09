@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --navy-950: #0b1b2e;
+  --navy-800: #123152;
+  --navy-700: #1b3f68;
+  --gold-500: #c6a15b;
+  --gold-600: #a9843c;
+  --bg: #f3f5f8;
+  --surface: #ffffff;
+  --border: #e1e5ea;
+  --text-900: #0f1b2d;
+  --text-600: #5b6673;
+  --text-400: #93a0ad;
+  --danger-bg: #fbe9e7;
+  --danger-text: #b3261e;
+  --success-bg: #e4f4ea;
+  --success-text: #1b7a43;
+  --radius-lg: 20px;
+  --shadow-md: 0 20px 44px rgba(11, 27, 46, 0.12);
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 24px;
+  font-family: var(--font-body);
+  background:
+    radial-gradient(circle at 88% 15%, rgba(198, 161, 91, 0.10), transparent 40%),
+    radial-gradient(circle at 10% 85%, rgba(27, 63, 104, 0.08), transparent 42%),
+    var(--bg);
+}
+
+.signup-card {
+  position: relative;
+  background: var(--surface);
+  padding: 44px 40px 36px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+  width: 100%;
+  max-width: 400px;
+  overflow: hidden;
+}
+
+.signup-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--gold-500) 0%, var(--navy-800) 100%);
+}
+
+.signup-card h1 {
+  font-family: var(--font-display);
+  font-size: 27px;
+  font-weight: 600;
+  color: var(--navy-950);
+  margin-bottom: 6px;
+  letter-spacing: -0.2px;
+}
+
+.signup-card p.subtitle {
+  color: var(--text-600);
+  font-size: 13.5px;
+  margin-bottom: 26px;
+}
+
+.signup-card input,
+.signup-card select {
+  width: 100%;
+  padding: 13px 14px;
+  background: #fbfbfc;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--text-900);
+  margin-bottom: 16px;
+  transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+  font-family: inherit;
+}
+
+.signup-card input::placeholder {
+  color: var(--text-400);
+}
+
+.signup-card input:focus,
+.signup-card select:focus {
+  outline: none;
+  background: var(--surface);
+  border-color: var(--navy-700);
+  box-shadow: 0 0 0 3px rgba(27, 63, 104, 0.10);
+}
+
+.signup-card select {
+  cursor: pointer;
+  color: var(--text-900);
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%235b6673' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+
+.signup-card button {
+  width: 100%;
+  padding: 13px;
+  background: var(--navy-950);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.1px;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.05s ease;
+  margin-top: 4px;
+}
+
+.signup-card button:hover:not(:disabled) {
+  background: var(--navy-800);
+}
+
+.signup-card button:active:not(:disabled) {
+  transform: scale(0.99);
+}
+
+.signup-card button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.signup-card .error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--danger-bg);
+  color: var(--danger-text);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin: -4px 0 14px 0;
+}
+
+.signup-card .success {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--success-bg);
+  color: var(--success-text);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin: -4px 0 14px 0;
+}
+
+.signup-card p {
+  font-size: 13.5px;
+  color: var(--text-600);
+  margin-top: 18px;
+  text-align: center;
+}
+
+.signup-card .link {
+  color: var(--navy-800);
+  cursor: pointer;
+  font-weight: 600;
+  transition: color 0.15s ease;
+}
+
+.signup-card .link:hover {
+  color: var(--gold-600);
+  text-decoration: underline;
+}
