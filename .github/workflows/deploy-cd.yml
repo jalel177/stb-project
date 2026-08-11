@@ -3,11 +3,35 @@ name: Deploy to AWS
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:   # lets you also trigger it manually from the Actions tab
+  workflow_dispatch:
 
 jobs:
-  deploy:
+  detect-changes:
     runs-on: ubuntu-latest
+    outputs:
+      backend_changed: ${{ steps.filter.outputs.backend }}
+      frontend_changed: ${{ steps.filter.outputs.frontend }}
+      terraform_changed: ${{ steps.filter.outputs.terraform }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Detect which parts changed
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            backend:
+              - 'demo/**'
+            frontend:
+              - 'stb-frontend/stb-frontend/**'
+            terraform:
+              - 'Cloud/terraform/**'
+
+  deploy:
+    needs: detect-changes
+    runs-on: ubuntu-latest
+    if: needs.detect-changes.outputs.backend_changed == 'true' || needs.detect-changes.outputs.frontend_changed == 'true' || needs.detect-changes.outputs.terraform_changed == 'true'
 
     steps:
       - name: Checkout code
@@ -38,28 +62,40 @@ jobs:
         run: echo "api_url=$(terraform output -raw api_invoke_url)" >> "$GITHUB_OUTPUT"
 
       - name: Log in to Amazon ECR
+        if: needs.detect-changes.outputs.frontend_changed == 'true' || needs.detect-changes.outputs.backend_changed == 'true'
         uses: aws-actions/amazon-ecr-login@v2
 
+      # ---------- FRONTEND: only if frontend files changed ----------
       - name: Build and push frontend image
+        if: needs.detect-changes.outputs.frontend_changed == 'true'
         working-directory: ./stb-frontend/stb-frontend
         run: |
           docker build --build-arg REACT_APP_API_URL=${{ steps.tf-output.outputs.api_url }} -t stb-frontend .
           docker tag stb-frontend:latest 705809089341.dkr.ecr.us-east-1.amazonaws.com/stb-frontend:latest
           docker push 705809089341.dkr.ecr.us-east-1.amazonaws.com/stb-frontend:latest
 
+      - name: Replace frontend EC2 instance
+        if: needs.detect-changes.outputs.frontend_changed == 'true'
+        working-directory: ./Cloud/terraform
+        env:
+          TF_VAR_db_password: ${{ secrets.DB_PASSWORD }}
+        run: terraform apply -replace="aws_instance.frontend" -auto-approve
+
+      # ---------- BACKEND: only if backend files changed ----------
       - name: Build and push backend image
+        if: needs.detect-changes.outputs.backend_changed == 'true'
         working-directory: ./demo
         run: |
           docker build -t stb-backend .
           docker tag stb-backend:latest 705809089341.dkr.ecr.us-east-1.amazonaws.com/stb-backend:latest
           docker push 705809089341.dkr.ecr.us-east-1.amazonaws.com/stb-backend:latest
 
-      - name: Replace EC2 instances with new images
+      - name: Replace backend EC2 instance
+        if: needs.detect-changes.outputs.backend_changed == 'true'
         working-directory: ./Cloud/terraform
         env:
           TF_VAR_db_password: ${{ secrets.DB_PASSWORD }}
-        run: |
-          terraform apply -replace="aws_instance.frontend" -replace="aws_instance.backend" -auto-approve
+        run: terraform apply -replace="aws_instance.backend" -auto-approve
 
       - name: Show deployed frontend URL
         working-directory: ./Cloud/terraform
