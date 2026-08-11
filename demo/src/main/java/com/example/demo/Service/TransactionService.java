@@ -203,20 +203,35 @@ public class TransactionService {
 
     // 9. Get transactions by a specific account (user must own it)
     public List<Transaction> getTransactionsByAccount(String accountNumber, String username) {
-        Account account = accountRepository.findByAccountNumber(accountNumber)
-                .orElseThrow(() -> new TransactionExceptions.AccountNotFoundException(
-                        "Account not found: " + accountNumber
-                ));
+        // Get all accounts belonging to the logged-in user
+        List<Account> userAccounts = accountRepository.findByUser_Username(username);
+        List<String> userAccountNumbers = userAccounts.stream()
+                .map(Account::getAccountNumber)
+                .toList();
 
-        if (!account.getUser().getUsername().equals(username)) {
-            throw new TransactionExceptions.UnauthorizedException(
-                    "You are not authorized to view this account's transactions"
+        if (userAccountNumbers.isEmpty()) {
+            throw new TransactionExceptions.AccountNotFoundException(
+                    "You have no accounts linked to your profile"
             );
         }
 
-        return transactionRepository.findBySenderOrReceiverAccount(accountNumber);
-    }
+        // Get every transaction involving the searched account (as sender or receiver)
+        List<Transaction> transactions = transactionRepository.findBySenderOrReceiverAccount(accountNumber);
 
+        // Only keep transactions where the logged-in user's own account is also involved
+        List<Transaction> visibleTransactions = transactions.stream()
+                .filter(t -> userAccountNumbers.contains(t.getSenderAccount())
+                        || userAccountNumbers.contains(t.getReceiverAccount()))
+                .toList();
+
+        if (visibleTransactions.isEmpty()) {
+            throw new TransactionExceptions.TransactionNotFoundException(
+                    "No transactions found between your account and " + accountNumber
+            );
+        }
+
+        return visibleTransactions;
+    }
     // ============ Helper Methods ============
 
     private Account validateSenderAccount(String accountNumber, String username) {
